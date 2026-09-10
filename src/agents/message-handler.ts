@@ -1,6 +1,6 @@
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { fmt, truncate } from "../ui/format.js";
-import { stopSpinner } from "../ui/spinner.js";
+import { startSpinner, stopSpinner } from "../ui/spinner.js";
 
 export type MessageHandlerOptions = {
   verbose?: boolean;
@@ -41,6 +41,8 @@ export function handleMessage(
   options: MessageHandlerOptions = {},
 ) {
   const { verbose = false } = options;
+
+  stopSpinner();
 
   if (verbose) {
     console.log(fmt.dim(`[${message.type}]`));
@@ -93,8 +95,6 @@ export function handleMessage(
     }
 
     case "result": {
-      stopSpinner();
-
       if (message.subtype === "success") {
         if (message.result?.trim()) {
           console.log(fmt.success("\n" + message.result.trim()));
@@ -117,5 +117,9 @@ export function handleMessage(
 
     default:
       break;
+  }
+
+  if (message.type !== "result") {
+    startSpinner("Thinking…");
   }
 }
