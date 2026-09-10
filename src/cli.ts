@@ -35,9 +35,10 @@ export function createCli() {
     .command("talk")
     .description("Talk to Claude AI")
     .argument("<prompt>", "The prompt to send to Claude AI")
-    .action(async (prompt: string) => {
+    .option("-v, --verbose", "Enable verbose output")
+    .action(async (prompt: string, options: { verbose?: boolean }) => {
       requireApiKey();
-      await runQuery(prompt);
+      await runQuery(prompt, { verbose: options.verbose });
     });
 
   program.action(() => {
