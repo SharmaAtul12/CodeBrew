@@ -1,6 +1,7 @@
 import {Command} from "commander";
 import { printBanner } from "./ui/banner.js";
-import { checkEnvironment } from "./config/env.js";
+import { checkEnvironment, requireApiKey } from "./config/env.js";
+import { runQuery } from "./agents/run-query.js";
 
 export function createCli() {
 
@@ -28,6 +29,15 @@ export function createCli() {
     .description("Check the environment")
     .action(() => {
       checkEnvironment();
+    });
+
+  program
+    .command("talk")
+    .description("Talk to Claude AI")
+    .argument("<prompt>", "The prompt to send to Claude AI")
+    .action(async (prompt: string) => {
+      requireApiKey();
+      await runQuery(prompt);
     });
 
   program.action(() => {
