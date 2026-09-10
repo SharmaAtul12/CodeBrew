@@ -1,5 +1,5 @@
-import chalk from "chalk";
 import "dotenv/config";
+import chalk from "chalk";
 import { execa } from "execa";
 
 
