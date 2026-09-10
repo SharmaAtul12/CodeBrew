@@ -1,5 +1,6 @@
 import {Command} from "commander";
 import { printBanner } from "./ui/banner.js";
+import { checkEnvironment } from "./config/env.js";
 
 export function createCli() {
 
@@ -21,6 +22,13 @@ export function createCli() {
     .action(() => {
       printBanner();
     })
+
+  program
+    .command("doctor")
+    .description("Check the environment")
+    .action(() => {
+      checkEnvironment();
+    });
 
   program.action(() => {
     program.help();
