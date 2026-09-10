@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Todo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <h1>Todo</h1>
+
+    <form id="form" class="form">
+      <input id="input" type="text" placeholder="What needs doing?" autocomplete="off" />
+      <button type="submit">Add</button>
+    </form>
+
+    <ul id="list" class="list"></ul>
+
+    <footer class="footer">
+      <span id="count">0 items left</span>
+      <div class="filters">
+        <button class="filter is-active" data-filter="all">All</button>
+        <button class="filter" data-filter="active">Active</button>
+        <button class="filter" data-filter="done">Done</button>
+      </div>
+      <button id="clear" class="clear">Clear done</button>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
