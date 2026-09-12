@@ -3,6 +3,8 @@ import { printBanner } from "./ui/banner.js";
 import { checkEnvironment, requireApiKey } from "./config/env.js";
 import { runQuery } from "./agents/run-query.js";
 import { CliMode, parseCliMode } from "./agents/modes.js";
+import { startChat } from "./commands/chat.js";
+import { wakeUp } from "./commands/wake-up.js";
 
 function parseMode(value: string): CliMode {
     const mode = parseCliMode(value);
@@ -27,6 +29,23 @@ export function createCli() {
     });
 
   program
+    .command("wakeup")
+    .description("Banner, preflight, mode picker, then chat")
+    .action(async () => {
+      await wakeUp();
+    });
+
+  program
+      .command("chat")
+      .description("Interactive streaming chat session")
+      .option("-m, --mode <mode>", "agent | ask | plan", "agent")
+      .option("-v, --verbose", "Show agent loop message types", false)
+      .action(async (opts: { mode: string; verbose: boolean }) => {
+        requireApiKey();
+        await startChat({ mode: parseMode(opts.mode), verbose: opts.verbose });
+    });
+
+  program
     .command("banner")
     .description("Show the Welcome Banner")
     .action(() => {
@@ -39,17 +58,6 @@ export function createCli() {
     .action(() => {
       checkEnvironment();
     });
-
-  program
-    .command("wakeup")
-    .description("Show the Welcome Banner")
-    .argument("<prompt>", "The prompt to send to Claude AI")
-    .option("-m, --mode <mode>", "The mode to run the query in (agent, ask, plan)", "agent")
-    .option("-v, --verbose", "Enable verbose output", false)
-    .action(async (prompt: string, options: { mode : string; verbose : boolean }) => {
-      requireApiKey();
-      await runQuery(prompt, { mode: parseMode(options.mode) , verbose: options.verbose });
-    })
 
   program
     .command("talk")
