@@ -17,8 +17,8 @@ function parseMode(value: string): CliMode {
 export function createCli() {
 
   const program = new Command()
-    .name("claude-cli")
-    .description("A CLI tool for interacting with Claude AI")
+    .name("codebrew")
+    .description("CodeBrew — brew your code with AI")
     .version("1.0.0");
 
   program
@@ -61,8 +61,8 @@ export function createCli() {
 
   program
     .command("talk")
-    .description("Talk to Claude AI")
-    .argument("<prompt>", "The prompt to send to Claude AI")
+    .description("Talk to CodeBrew")
+    .argument("<prompt>", "The prompt to send to CodeBrew")
     .option("-v, --verbose", "Enable verbose output")
     .action(async (prompt: string, options: { verbose?: boolean }) => {
       requireApiKey();
