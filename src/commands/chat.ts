@@ -1,4 +1,3 @@
-import { input } from "@inquirer/prompts";
 import type { Query } from "@anthropic-ai/claude-agent-sdk";
 import { createSession } from "../agents/create-session.js";
 import { handleMessage } from "../agents/message-handler.js";
@@ -8,7 +7,8 @@ import {
   type CliMode,
 } from "../agents/modes.js";
 import { SLASH_COMMANDS } from "../config/constants.js";
-import { fmt } from "../ui/format.js";
+import { fmt, badge, divider, glyph } from "../ui/format.js";
+import { boxedInput } from "../ui/prompt.js";
 import { startSpinner, stopSpinner } from "../ui/spinner.js";
 
 export type ChatOptions = {
@@ -17,9 +17,10 @@ export type ChatOptions = {
 };
 
 function printSlashHelp(): void {
-  console.log(fmt.label("\nSlash commands:"));
+  console.log();
+  console.log(fmt.heading(`${glyph.spark} Slash commands`));
   for (const { command, description } of SLASH_COMMANDS) {
-    console.log(fmt.dim(`  ${command.padEnd(22)} ${description}`));
+    console.log(`  ${fmt.key(command.padEnd(24))} ${fmt.muted(description)}`);
   }
   console.log();
 }
@@ -115,9 +116,15 @@ export async function startChat(options: ChatOptions = {}): Promise<void> {
   const session = createSession(initialMode);
   const turnGate = createTurnGate();
 
-  console.log(fmt.mode(`Chat started in ${initialMode} mode`));
-  console.log(fmt.dim("Type /help for commands, /exit to quit.\n"));
+  console.log(divider());
+  console.log(
+    `${badge("CHAT")} ${fmt.accent(`session started`)} ${fmt.muted(glyph.dot)} ${fmt.mode(
+      `${initialMode} mode`,
+    )}`,
+  );
+  console.log(fmt.muted(`Type ${fmt.key("/help")} for commands, ${fmt.key("/exit")} to quit.`));
   printSlashHelp();
+  console.log(divider());
 
   const processing = (async () => {
     try {
@@ -155,7 +162,7 @@ export async function startChat(options: ChatOptions = {}): Promise<void> {
     await turnGate.wait();
     stopSpinner();
 
-    const line = await input({ message: fmt.label("You:") });
+    const line = await boxedInput(session.mode);
     const trimmed = line.trim();
 
     if (!trimmed) continue;
@@ -180,5 +187,6 @@ export async function startChat(options: ChatOptions = {}): Promise<void> {
   session.query.close();
   await processing;
   stopSpinner();
-  console.log(fmt.dim("Session ended."));
+  console.log(divider());
+  console.log(fmt.muted(`${glyph.dot} Session ended. See you next time.`));
 }

@@ -1,6 +1,6 @@
-# Claude CLI Agent
+# CodeBrew
 
-> A command-line assistant that lets you talk to Claude AI right from your terminal — ask questions, explore a codebase, or hold a full back-and-forth conversation where Claude can read, write, and run commands on your behalf.
+> **CodeBrew — brew your code with AI.** A command-line assistant that lets you talk to Claude AI right from your terminal — ask questions, explore a codebase, or hold a full back-and-forth conversation where Claude can read, write, and run commands on your behalf.
 
 ---
 
@@ -54,7 +54,7 @@ Think of it like hiring a helper: sometimes you just want advice (Ask), sometime
 
 ## What This Project Is
 
-**Claude CLI Agent** is a TypeScript command-line tool built on top of the [Anthropic Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk). It wraps the SDK's agent loop in a friendly, colorful terminal interface and layers a permission system on top so you control exactly what the AI is allowed to do.
+**CodeBrew** is a TypeScript command-line tool built on top of the [Anthropic Claude Agent SDK](https://www.npmjs.com/package/@anthropic-ai/claude-agent-sdk). It wraps the SDK's agent loop in a friendly, colorful terminal interface and layers a permission system on top so you control exactly what the AI is allowed to do.
 
 It supports two interaction styles:
 
@@ -317,7 +317,7 @@ sequenceDiagram
 
 ## Command Reference
 
-All commands run through the `claude-cli` program defined in `cli.ts`.
+All commands run through the `codebrew` program defined in `cli.ts`.
 
 | Command | Description | Options |
 |---------|-------------|---------|
@@ -482,7 +482,7 @@ Color coding lives in `ui/format.ts` (assistant cyan, tools yellow, results gree
 ## Project Structure
 
 ```
-claude-cli-agent/
+codebrew/
 ├── src/
 │   ├── index.ts                  # Entry point — builds and parses the CLI
 │   ├── cli.ts                    # Commander program & command definitions
