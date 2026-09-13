@@ -29,6 +29,34 @@ Think of it like hiring a helper: sometimes you just want advice (Ask), sometime
 
 ---
 
+## Install
+
+Install globally from npm, then run the `codebrew` command anywhere:
+
+```bash
+npm install -g @buildwithatul/codebrew
+```
+
+Set your Anthropic API key (see [Configuration](#configuration)), then start:
+
+```bash
+# Guided start: banner, preflight, mode picker, then chat
+codebrew wakeup
+
+# Jump straight into an interactive chat
+codebrew chat --mode agent
+
+# One-off single-shot prompt
+codebrew talk "what does this project do?"
+
+# Check your environment
+codebrew doctor
+```
+
+> The npm **package** is `@buildwithatul/codebrew`; the **command** you type is `codebrew`.
+
+---
+
 ## Table of Contents
 
 - [What This Project Is](#what-this-project-is)
@@ -325,8 +353,7 @@ All commands run through the `codebrew` program defined in `cli.ts`.
 | `wakeup` | Banner + environment preflight + interactive mode picker, then drops into `chat`. | — |
 | `talk <prompt>` | Single-shot prompt (runs in the default `agent` mode). | `-v, --verbose` |
 | `doctor` | Verifies Node.js 18+ and that `ANTHROPIC_API_KEY` is set. | — |
-| `banner` | Shows the ASCII welcome banner. | — |
-| `hello` | Prints `Hello, World!` — a sanity check. | — |
+| `hello` | Shows the ASCII welcome banner. | — |
 
 Running the program with no command prints the help screen.
 
@@ -447,7 +474,7 @@ Color coding lives in `ui/format.ts` (assistant cyan, tools yellow, results gree
 | File | Intention |
 |------|-----------|
 | `src/index.ts` | Boots the app: builds the Commander program and parses `process.argv`. |
-| `src/cli.ts` | Defines every command (`chat`, `wakeup`, `talk`, `doctor`, `banner`, `hello`), their options, and wires each to its action. Also validates `--mode` via `parseMode()`. |
+| `src/cli.ts` | Defines every command (`chat`, `wakeup`, `talk`, `doctor`, `hello`), their options, and wires each to its action. Also validates `--mode` via `parseMode()`. |
 
 ### Commands
 
@@ -582,6 +609,8 @@ npm run dev -- wakeup
 # Or jump straight into a chat
 npm run dev -- chat --mode agent
 ```
+
+> The `npm run dev --` prefix above is for running from a cloned repo (development). If you installed the published package with `npm install -g @buildwithatul/codebrew`, use the `codebrew` command directly instead — e.g. `codebrew wakeup`.
 
 ### Available npm scripts
 
