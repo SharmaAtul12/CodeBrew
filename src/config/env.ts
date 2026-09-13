@@ -6,7 +6,9 @@ export function requireApiKey(): string {
   const key = process.env.ANTHROPIC_API_KEY;
   if (!key) {
     throw new Error(
-      "Missing ANTHROPIC_API_KEY. Copy .env.example to .env and add your key."
+      "Missing ANTHROPIC_API_KEY.\n" +
+        "  Set it as an environment variable:  export ANTHROPIC_API_KEY=your_key\n" +
+        "  Or create a .env file in the directory you run codebrew from, containing:  ANTHROPIC_API_KEY=your_key"
     );
   }
   return key;

@@ -23,9 +23,9 @@ export function createCli() {
 
   program
     .command("hello")
-    .description("A simple hello command")
+    .description("Show the welcome banner")
     .action(() => {
-      console.log("Hello, World!");
+      printBanner();
     });
 
   program
@@ -44,13 +44,6 @@ export function createCli() {
         requireApiKey();
         await startChat({ mode: parseMode(opts.mode), verbose: opts.verbose });
     });
-
-  program
-    .command("banner")
-    .description("Show the Welcome Banner")
-    .action(() => {
-      printBanner();
-    })
 
   program
     .command("doctor")

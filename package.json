@@ -1,16 +1,40 @@
 {
-  "name": "codebrew",
+  "name": "@buildwithatul/codebrew",
   "version": "1.0.0",
-  "description": "CodeBrew — brew your code with AI",
+  "description": "CodeBrew — brew your code with AI. A terminal AI coding agent that can read, edit, and run your code.",
   "license": "ISC",
-  "author": "",
+  "author": "buildwithatul",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "coding-agent",
+    "claude",
+    "anthropic",
+    "terminal",
+    "developer-tools",
+    "codebrew"
+  ],
   "type": "module",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "bin": {
+    "codebrew": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^22.20.2",
